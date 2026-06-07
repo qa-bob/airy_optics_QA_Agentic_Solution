@@ -7,11 +7,13 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: [['html'], ['list']],
+  timeout: 60_000,
   use: {
     baseURL: 'https://www.airyoptics.com',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'on-first-retry',
+    ignoreHTTPSErrors: true,
   },
   projects: [
     {

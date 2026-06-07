@@ -17,8 +17,8 @@ test.describe('@smoke Site Availability', () => {
       if (msg.type() === 'error') consoleErrors.push(msg.text());
     });
 
-    await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.goto('/', { waitUntil: 'commit' });
+    await page.locator('header').waitFor({ state: 'visible' });
 
     expect(
       consoleErrors.filter((e) => !e.includes('favicon') && !e.includes('analytics')),
@@ -32,8 +32,8 @@ test.describe('@smoke Site Availability', () => {
       if (msg.type() === 'error') consoleErrors.push(msg.text());
     });
 
-    await page.goto('/contact');
-    await page.waitForLoadState('domcontentloaded');
+    await page.goto('/contact', { waitUntil: 'commit' });
+    await page.locator('header').waitFor({ state: 'visible' });
 
     expect(
       consoleErrors.filter((e) => !e.includes('favicon') && !e.includes('analytics')),

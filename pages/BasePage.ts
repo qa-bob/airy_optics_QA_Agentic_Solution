@@ -14,9 +14,9 @@ export abstract class BasePage {
     this.page = page;
   }
 
-  /** Navigate to this page's path */
+  /** Navigate to this page's path, waiting only for the server response (not JS execution) */
   async goto(): Promise<void> {
-    await this.page.goto(this.path);
+    await this.page.goto(this.path, { waitUntil: 'commit' });
   }
 
   /** Get the current page <title> text */
@@ -35,9 +35,9 @@ export abstract class BasePage {
     return h1.textContent();
   }
 
-  /** Wait for the page to reach a network idle state */
+  /** Wait for the page header to be visible — reliable for Squarespace sites */
   async waitForLoad(): Promise<void> {
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.locator('header').waitFor({ state: 'visible' });
   }
 
   /** Check whether the page has any console errors */
